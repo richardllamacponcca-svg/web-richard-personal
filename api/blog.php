@@ -61,7 +61,7 @@
     
     <?php
     // Buscamos la carpeta de poemas
-    $directorio = __DIR__ . '/../poemas/';
+    $directorio = __DIR__ . '/poemas/';
     
     if (is_dir($directorio)) {
         $archivos = glob($directorio . '*.txt');
