@@ -36,7 +36,7 @@
 
     <main>
         <section id="perfil">
-            <img src="../img/foto.jpg" alt="Richard Llamacponcca" onerror="this.src='https://ui-avatars.com/api/?name=Richard+Llamacponcca&size=200&background=004b87&color=fff'">
+            <img src="/img/foto.jpeg" alt="Richard Llamacponcca" onerror="this.src='https://ui-avatars.com/api/?name=Richard+Llamacponcca&size=200&background=004b87&color=fff'">
             <p>Profesional multidisciplinario basado en Cusco, Perú. Ofrezco soluciones integrales e innovadoras que unen la ingeniería, la tecnología y el derecho.</p>
         </section>
 

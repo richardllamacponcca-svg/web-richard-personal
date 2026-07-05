@@ -5,43 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog de Poesía - Richard Llamacponcca</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 40px 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { color: #004b87; border-bottom: 2px solid #ccc; padding-bottom: 10px; }
-        .btn-volver { display: inline-block; background: #333; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-bottom: 20px; }
-        .btn-volver:hover { background: #555; }
-        .btn-leer { display: inline-block; background: #004b87; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold;}
-        .btn-leer:hover { background: #00335e; }
-        article { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #004b87; }
-        article h3 { margin: 0; text-transform: capitalize; font-size: 1.2rem;}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Esto es lo que centra todo en la pantalla */
+        }
+        .btn-volver {
+            background: #004b87;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+        .btn-volver:hover {
+            background: #00335e;
+        }
+        .poema-container {
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            max-width: 700px;
+            width: 100%;
+            text-align: center; /* Centra el texto del poema */
+            margin-bottom: 40px;
+        }
+        h1 { 
+            color: #004b87; 
+            margin-top: 0; 
+            text-transform: capitalize; 
+            font-size: 2.2rem;
+            border-bottom: 2px solid #eee; 
+            padding-bottom: 15px; 
+        }
+        .contenido { 
+            font-style: italic; 
+            font-size: 1.2rem; 
+            line-height: 1.8; 
+            color: #444; 
+            margin: 30px 0; 
+            white-space: pre-wrap; /* Respeta los saltos de línea de tu txt */
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="/" class="btn-volver">← Volver al Perfil Principal</a>
-        <h1>Mis Poemas y Reflexiones</h1>
+    
+    <a href="/" class="btn-volver">← Volver al Perfil Principal</a>
+    
+    <?php
+    // Buscamos la carpeta de poemas
+    $directorio = __DIR__ . '/../poemas/';
+    
+    if (is_dir($directorio)) {
+        $archivos = glob($directorio . '*.txt');
         
-        <?php
-        $directorio = __DIR__ . '/../poemas/';
-        if (is_dir($directorio)) {
-            $archivos = glob($directorio . '*.txt');
-            if (count($archivos) > 0) {
-                foreach ($archivos as $archivo) {
-                    $nombre_archivo = basename($archivo, '.txt');
-                    $titulo = str_replace('-', ' ', $nombre_archivo); 
-                    
-                    echo "<article>";
-                    echo "<h3>" . htmlspecialchars($titulo) . "</h3>";
-                    echo "<a href='/api/poema.php?file=" . urlencode($nombre_archivo) . "' class='btn-leer'>Leer poema</a>"; 
-                    echo "</article>";
-                }
-            } else {
-                echo "<p>Aún no hay poemas publicados.</p>";
+        if (count($archivos) > 0) {
+            // Mostramos cada poema directamente, completo y centrado
+            foreach ($archivos as $archivo) {
+                $nombre_archivo = basename($archivo, '.txt');
+                $titulo = str_replace('-', ' ', $nombre_archivo); 
+                $contenido = file_get_contents($archivo);
+                
+                echo "<div class='poema-container'>";
+                echo "<h1>" . htmlspecialchars($titulo) . "</h1>";
+                echo "<div class='contenido'>" . htmlspecialchars($contenido) . "</div>";
+                echo "</div>";
             }
         } else {
-            echo "<p>Aún no hay poemas publicados.</p>";
+            echo "<div class='poema-container'><p>Aún no hay poemas publicados.</p></div>";
         }
-        ?>
-    </div>
+    } else {
+        echo "<div class='poema-container'><p>Aún no hay poemas publicados.</p></div>";
+    }
+    ?>
+
 </body>
 </html>
